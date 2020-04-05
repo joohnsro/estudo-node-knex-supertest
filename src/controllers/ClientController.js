@@ -28,8 +28,27 @@ module.exports = {
         })
     },
 
-    async delete(request, response){
+    async update(request, response) {
+        const { id } = request.params;
+        const { name, birthDate, address, email, phone, whatsapp, facebook, instagram } = request.body;
 
+        await connection('clients')
+            .where('id', id)
+            .update({
+                name,
+                birthDate,
+                address,
+                email,
+                phone,
+                whatsapp,
+                facebook,
+                instagram
+            });
+
+            return response.status(204).send();
+    },
+
+    async delete(request, response){
         const { id } = request.params;
 
         await connection('clients').where('id', id).delete();
