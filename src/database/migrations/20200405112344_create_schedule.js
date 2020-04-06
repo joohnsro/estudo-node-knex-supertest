@@ -4,6 +4,7 @@ exports.up = function(knex) {
       table.increments();
       
       table.datetime('schedule').notNullable();
+      table.integer('weekday').notNullable();
       table.string('status').notNullable();
 
       table.integer('client_id').notNullable();

@@ -11,14 +11,17 @@ module.exports = {
                 'services.name as service_name'
             ]);
 
-        return response.json({ schedules });
+        return response.json(schedules);
     },
 
     async create(request, response) {
         const { schedule, status, client_id, service_id } = request.body;
 
+        const weekday = new Date(schedule).getDay();
+
         await connection('schedules').insert({
             schedule,
+            weekday,
             status,
             client_id,
             service_id,
@@ -35,10 +38,13 @@ module.exports = {
         const { id } = request.params;
         const { schedule, status, service_id } = request.body;
 
+        const weekday = new Date(schedule).getDay();
+
         await connection('schedules')
             .where('id', id)
             .update({
                 schedule,
+                weekday,
                 status,
                 service_id,
             });
